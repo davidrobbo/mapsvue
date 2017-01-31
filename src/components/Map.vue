@@ -1,28 +1,27 @@
 <template>
     <div>
-        <button v-for="(marker, index) in markers" @click="changeVis(index)">{{marker.name}}</button>
-        <div id="map">
+        <div id="container">
+            <div id="over-map">
+                <div v-for="(marker, index) in markers">
+                    <button @click="changeVis(index)">{{marker.name}} <img :src="marker.icon"></button>
+                </div>
+            </div>
+            <div id="map">
+            </div>
         </div>
     </div>
 </template>
 <script>
     import Vue from 'vue'
     import Event from '../Event.js'
+    import mapStyles from '../map-styles.js'
+    import markers from '../markers.js'
     export default {
         name: '',
         data() {
             return {
                 map: {},
-                geo: {
-                    test: [
-                        {lat: 52, lng:2},
-                        {lat: 52, lng:2.2},
-                    ],
-                    another: [
-                        {lat: 55, lng:4},
-                        {lat: 56, lng:4.2},
-                    ]
-                },
+                geo: markers,
                 markers: []
             }
         },
@@ -31,9 +30,9 @@
         methods: {
             loadMap(){
                 this.map = new google.maps.Map(document.getElementById('map'), {
-                      zoom: 12,
+                      zoom: 6,
                       center: {lat: 52, lng: 2},
-                      mapTypeId: 'terrain'
+                      styles: mapStyles
                     });
                 this.addMarkers();
             },
@@ -41,18 +40,19 @@
                 let count = 1;
                 for(let group in this.geo){
                     if(!this.markers.hasOwnProperty(group)){
-                        this.markers.push({name: group, markers: [], active: true, id:count});
-                        this.geo[group].forEach((mark) =>{
-                            this.addMarker(mark, count);
+                        this.markers.push({name: this.geo[group].name, markers: [], active: true, id:count, icon: this.geo[group].icon});
+                        this.geo[group].offices.forEach((mark) =>{
+                            this.addMarker(mark, count, this.geo[group].icon);
                         });
                         count++;
                     }
                 }
             },
-            addMarker(location, id) {
+            addMarker(location, id, icon) {
                 var marker = new google.maps.Marker({
                   position: location,
-                  map: this.map
+                  map: this.map,
+                  icon: icon
                 });
                 this.markers.forEach(function(mark){
                     if (mark.id == id){
@@ -77,8 +77,11 @@
     }
 </script>
 <style>
-    #map {
-      height: 400px;
-      width: 100%;
-    }
+
+#container { width: 100%; height: 100% }
+
+#over-map { z-index: 100; position: absolute;
+       margin: 50px 0px 0px 10px; background-color: #fff;
+       border: 1px #000 Solid; padding: 5px; }
+#map { width: 100%; height: 500px }
 </style>
