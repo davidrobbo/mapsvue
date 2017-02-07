@@ -66,11 +66,20 @@ const mapStyles = [
         ]
     },
     {
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#d5d5d5"
+            }
+        ]
+    },
+    {
         "featureType": "landscape",
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": "#0f0f0f"
             },
             {
                 "lightness": 20
@@ -86,6 +95,15 @@ const mapStyles = [
             },
             {
                 "lightness": 21
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#d5d5d5"
             }
         ]
     },
@@ -153,11 +171,29 @@ const mapStyles = [
         ]
     },
     {
+        "featureType": "transit.station",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
         "featureType": "water",
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": "#4f4f4f"
             },
             {
                 "lightness": 17
